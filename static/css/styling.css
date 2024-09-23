@@ -1,0 +1,68 @@
+.btn-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.smallBuffer {
+    padding-left: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-right: 1%;
+}
+
+.paddingBottom {
+    padding-bottom: 2%;
+}
+
+footer {
+    padding-top: 2%;
+    text-align: center;
+    color: white;
+    background-color: #16181A;
+}
+
+.primaryColour {
+    background-color: #16181A;
+}
+
+.secondaryColour {
+    background-color: #353840;
+}
+
+.whiteText {
+    text-align: start;
+    color: white;
+}
+
+.title {
+    font-size: 350%;
+    text-align: center;
+}
+
+.subHeading {
+    font-size: 150%;
+    text-align: center;
+}
+
+.accentColour {
+    background: #5342C2;
+}
+
+.whiteHeading {
+    text-align: center;
+    color: white;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+nav {
+    background-color: #16181A;
+    
+}
+
+.bottomAlign {
+    align-content:end;
+}

@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HitsOnDeck - My Account</title>
+  <link rel="shortcut icon" href="static\img\HitsOnDeckLogo.png" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="static\css\styling.css">
+</head>
+
+
+<body>
+  <header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top" data-bs-theme="dark">
+      <div class="container">
+        <a class="navbar-brand" href="index.html"><img src="static\img\HitsOnDeckTransparent.png" alt="Logo" width="120"
+            height="80" class="d-inline-block align-text-top">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav w-100 d-flex justify-content-between px-5 mb-2 mb-lg-0">
+            <h2 class="nav-item">
+              <a class="nav-link" aria-current="page" href="index.html">Home</a>
+            </h2>
+            <h2 class="nav-item">
+              <a class="nav-link" href="Event Details.html">Book Event</a>
+            </h2>
+            <h2 class="nav-item">
+              <a class="nav-link" href="Event Creation.html">Your Events</a>
+              </h1>
+              <h2 class="nav-item">
+                <a class="nav-link active" href="My Account.html">My Account</a>
+              </h2>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  </header>
+
+
+  <main>
+    <div class="container mt-4">
+      <!-- Booking History Section -->
+      <div class="border p-3 mb-4">
+        <h5 class="accentColour whiteText p-2">BOOKING HISTORY</h5>
+        <div class="row">
+          <!-- Flume Live in Concert -->
+          <div class="col-md-6 text-center border-bottom card">
+            <div class="row"> <!-- New row to align image and text side by side -->
+              <div class="col-12 col-md-6">
+                <img src="static\img\flumethumbnail.png" class="img-thumbnail" alt="..." width="175" height="175">
+              </div>
+        
+              <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+                <p><strong>Flume Live in Concert</strong></p>
+                <p>Riverstage Brisbane, QLD</p>
+                <p>8 Oct 2024</p>
+                <p>Booking ID: 33865134</p>
+                <p>Booked On: 14/08/24</p>
+
+                <a href="index.html" class="stretched-link"></a>
+              </div>
+            </div>
+          </div>
+        
+          <!-- SummerVibes Festival -->
+          <div class="col-md-6 text-center border-bottom card">
+            <div class="row"> <!-- New row to align image and text side by side -->
+              <div class="col-12 col-md-6">
+                <img src="static\img\summervibesfestthumbnail.png" class="img-thumbnail" alt="..." width="175" height="175">
+              </div>
+        
+              <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+                <p><strong>Summer Vibes Festival</strong></p>
+                <p>Bondi Beach, Sydney, NSW</p>
+                <p>22 Jul 2024</p>
+                <p>Booking ID: 9874937</p>
+                <p>Booked On: 1/03/24</p>
+
+                <a href="index.html" class="stretched-link"></a>
+              </div>
+            </div>
+          </div>
+        
+          <!-- Electric Pulse Festival -->
+          <div class="col-md-6 text-center border-bottom card">
+            <div class="row"> <!-- New row to align image and text side by side -->
+              <div class="col-12 col-md-6">
+                <img src="static\img\electricpulsethumbnail.png" class="img-thumbnail" alt="..." width="175" height="175">
+              </div>
+        
+              <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+                <p><strong>Electric Pulse Festival</strong></p>
+                <p>Brisbane Showgrounds, Brisbane, QLD</p>
+                <p>17 - 19 Aug 2024</p>
+                <p>Booking ID: 28964683</p>
+                <p>Booked On: 05/05/24</p>
+
+                <a href="index.html" class="stretched-link"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
+      <!-- Account Details Section -->
+      <div class="border p-3 mb-4">
+        <h5 class="accentColour whiteText p-2">ACCOUNT DETAILS</h5>
+        <form>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="email" class="form-label">Email:</label>
+              <input type="email" class="form-control" id="email" value="flynn.kassulke@gmail.com">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="firstName" class="form-label">First name:</label>
+              <input type="text" class="form-control" id="firstName" value="Flynn">
+            </div>
+            <div class="col-md-6">
+              <label for="lastName" class="form-label">Last name:</label>
+              <input type="text" class="form-control" id="lastName" value="Kassulke">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <label for="dob" class="form-label">Date of birth:</label>
+              <div class="input-group">
+                <select class="form-select" id="day">
+                  <option selected>11</option>
+                </select>
+                <select class="form-select" id="month">
+                  <option selected>JUN</option>
+                </select>
+                <select class="form-select" id="year">
+                  <option selected>2002</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="gender" class="form-label">Gender:</label>
+              <div>
+                <input type="radio" id="male" name="gender" checked>
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender">
+                <label for="female">Female</label>
+                <input type="radio" id="nonspecific" name="gender">
+                <label for="nonspecific">Non-specific</label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="phone" class="form-label">Phone number:</label>
+              <input type="text" class="form-control" id="phone" value="+61452437070">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <label for="country" class="form-label">Country:</label>
+              <select class="form-select" id="country">
+                <option selected>Australia</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="state" class="form-label">State:</label>
+              <select class="form-select" id="state">
+                <option selected>QLD</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="postcode" class="form-label">Postcode:</label>
+              <input type="text" class="form-control" id="postcode" value="4209">
+            </div>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-outline-success">SAVE DETAILS</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Password Reset Section -->
+      <div class="border p-3 mb-4">
+        <h5 class="accentColour whiteText p-2">PASSWORD RESET</h5>
+        <form>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="currentPassword" class="form-label">Current password:</label>
+              <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="newPassword" class="form-label">New password:</label>
+              <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+            </div>
+            <div class="col-md-6">
+              <label for="confirmPassword" class="form-label">Confirm password:</label>
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Enter confirm new password">
+            </div>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-outline-success">RESET PASSWORD</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer  -->
+  <footer>
+    <div class="container.fluid text-center">
+      <div class="row">
+        <div class="col">
+          <h1>About Us</h1>
+          <p>At HitsOnDeck, we're passionate about music and live experiences.
+            Our platform connects music lovers with the festivals and concerts they love,
+            while also empowering event organizers to create, manage, and sell tickets
+            effortlessly. Whether you're a fan or a promoter, HitsOnDeck is designed to
+            elevate your festival experience.
+          </p>
+        </div>
+        <div class="col">
+          <h1>Get Help</h1>
+          <p>Need assistance? We're here to help! Visit our Help Center for FAQs,
+            troubleshooting tips, and customer support. Whether you’re having issues
+            with ticket purchases or setting up your event, we've got you covered.
+            Contact us anytime, and our support team will ensure you get back to enjoying the music.
+          </p>
+        </div>
+        <div class="col">
+          <h1>Creating an Event?</h1>
+          <p>Ready to host your own festival? With HitsOnDeck, creating and managing your event has
+            never been easier. Our platform offers a step-by-step guide to help you set up your festival,
+            customize ticket options, and reach your audience. Join our growing community of festival
+            creators and make your event a success!
+          </p>
+        </div>
+        <div class="col">
+          <h1>Terms & Services</h1>
+          <p>By using HitsOnDeck, you agree to our Terms & Services. We’re committed to providing a safe,
+            secure, and enjoyable experience for all users. Please review our terms to learn more about
+            your rights and responsibilities as a buyer or seller on our platform.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
