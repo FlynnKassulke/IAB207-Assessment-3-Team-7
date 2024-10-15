@@ -33,6 +33,7 @@ def login():
             flash(error)
     return render_template('user.html', form=login_form, heading='Login')
 
+
 #logout function
 @auth_bp.route('/logout')
 @login_required
