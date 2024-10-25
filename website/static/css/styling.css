@@ -66,3 +66,9 @@ nav {
 .bottomAlign {
     align-content:end;
 }
+
+.date {
+    float:right;
+    text-decoration: none;
+    color:#3d3f43;
+}
