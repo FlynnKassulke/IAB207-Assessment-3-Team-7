@@ -16,6 +16,8 @@ class RegisterForm(FlaskForm):
     password=PasswordField("Password", validators=[InputRequired(),
                   EqualTo('confirm', message="Passwords should match")])
     confirm = PasswordField("Confirm Password")
+    contact_number=StringField("Contact Number", validators=[InputRequired()])
+    street_addresss=StringField("Street Address", validators=[InputRequired()])
 
     # submit button
     submit = SubmitField("Register")
