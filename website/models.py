@@ -21,6 +21,7 @@ class Event(db.Model):
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String(100), nullable=False)
     description=db.Column(db.String(1000), nullable=False)
+    genre=db.Column(db.String(200), nullable=False)
     location=db.Column(db.String(200),nullable=False)
     time=db.Column(db.DateTime,nullable=False)
     contact_number = db.Column(db.Integer, index=True, nullable=False)
