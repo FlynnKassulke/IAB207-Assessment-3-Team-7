@@ -1,5 +1,7 @@
-from flask import Blueprint, render_template, session
+from flask import Flask, Blueprint, render_template, session, redirect, request 
+from werkzeug.security import generate_password_hash
 
+app = Flask(__name__)
 main_bp = Blueprint('main', __name__)
 MyAccount_bp = Blueprint('MyAccount', __name__)
 
@@ -44,6 +46,20 @@ def my_account():
 def login():
     return render_template('Login Page.html')
 
-@main_bp.route('/register')
+@main_bp.route('/register', methods =["GET","POST"])
 def register():
+    if request.method == "POST":
+        user_name = request.form.get("username")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        contact_number = request.form.get("contact_number")
+        street_address = request.form.get("street_address")
+
+        if not (user_name and email and password and contact_number and street_address):
+            return render_template('Register Page.html', message="All fields are required")
+        
+        hashed_pass = generate_password_hash(password)
+
+        return redirect('/login')
+
     return render_template('Register Page.html')

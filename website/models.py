@@ -12,9 +12,6 @@ class User(db.Model, UserMixin):
     contact_number = db.Column(db.Integer, index=True, nullable=False)
     street_address = db.Column(db.String(100), index=True, nullable=False)
 
-    comments = db.relationship('Comment',backref='user')
-    events = db.relationship('Event',secondary='comments',backref=db.backref('commented_users'))
-
 class Event(db.Model):
     __tablename__='events'
 
@@ -27,10 +24,6 @@ class Event(db.Model):
     contact_number = db.Column(db.Integer, index=True, nullable=False)
     street_address = db.Column(db.String(100), index=True, nullable=False)
 
-    comments = db.relationship('Comment',backref='events')
-    orders = db.relationship('Order', backref='events')
-
-    
 
 class Comment(db.Model):
     __tablename__='comments'
@@ -51,6 +44,6 @@ class Order(db.Model):
 
     eventid=db.Column(db.Integer,db.ForeignKey('events.id'))
 
-    events = db.relationship('Event',backref='orders')
+    
 
     
