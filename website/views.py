@@ -1,5 +1,11 @@
-from flask import Flask, Blueprint, render_template, session, redirect, request 
+from flask import Flask, Blueprint, render_template, session, redirect, request, url_for, flash
 from werkzeug.security import generate_password_hash
+from flask import render_template, request
+from datetime import datetime
+from .models import Event
+#from . import main_bp
+from flask import Blueprint, render_template, session, request, redirect, url_for
+from .models import db, Event
 
 app = Flask(__name__)
 main_bp = Blueprint('main', __name__)
@@ -7,32 +13,58 @@ MyAccount_bp = Blueprint('MyAccount', __name__)
 
 @main_bp.route('/')
 def index():
-    return render_template('index.html')
+    events = Event.query.all()
+    return render_template('index.html', events=events)
 
-# Define the event_details route
-@main_bp.route('/event-details')
+@main_bp.route('/event/', methods=['GET'])
 def event_details():
-    # Fetch quantities from session
+    event = Event.query.get_or_404()
     quantities = session.get('quantities', {
         "standard-adult": 0,
         "standard-concession": 0,
-        "vip-seasons-package": 0,
-        "vip-flumed": 0
+        "vip-seasons-package": 0
     })
 
-    # Calculate total costs
     ticket_prices = {
         "standard-adult": 152.68,
         "standard-concession": 877.55,
-        "vip-seasons-package": 1412.78,
-        "vip-flumed": 1682.95
+        "vip-seasons-package": 1412.78
     }
     total_ticket_cost = sum(quantities[ticket] * ticket_prices[ticket] for ticket in quantities)
     booking_fee = 10
     final_cost = total_ticket_cost + booking_fee
 
-    # Render the template with quantities and costs
-    return render_template('Event Details.html', quantities=quantities, total_ticket_cost=total_ticket_cost, final_cost=final_cost)
+    return render_template(
+        'Event Details.html',
+        event=event,
+        quantities=quantities,
+        total_ticket_cost=total_ticket_cost,
+        final_cost=final_cost
+    )
+
+@main_bp.route('/events', methods=['GET'])
+def events():
+    sort_criteria = request.args.get('sort', '')
+    print("Received sort criteria:", sort_criteria)  # Debugging log
+
+    # Base query
+    query = Event.query
+
+    # Apply sorting based on selected criteria
+    if sort_criteria == 'genre':
+        query = query.order_by(Event.genre)
+    elif sort_criteria == 'date':
+        query = query.order_by(Event.time)
+
+    # Execute query to get the events
+    events = query.all()
+
+    # Add current datetime to context
+    now = datetime.now()
+    
+    # Render template with sorted events and 'now' for date comparisons
+    return render_template('index.html', events=events, now=now)
+
 
 @main_bp.route('/event-creation')
 def event_creation():
@@ -63,3 +95,26 @@ def register():
         return redirect('/login')
 
     return render_template('Register Page.html')
+
+# Define index and event details route as before
+
+@main_bp.route('/increment/<ticket_type>')
+def increment(ticket_type):
+    quantities = session.get('quantities', {})
+    ticket_limits = {
+        "standard-adult": None,
+        "standard-concession": 2,
+        "vip-seasons-package": 2
+    }
+    if ticket_type in quantities and (ticket_limits[ticket_type] is None or quantities[ticket_type] < ticket_limits[ticket_type]):
+        quantities[ticket_type] += 1
+        session['quantities'] = quantities
+    return redirect(request.referrer or url_for('main.index'))
+
+@main_bp.route('/decrement/<ticket_type>')
+def decrement(ticket_type):
+    quantities = session.get('quantities', {})
+    if ticket_type in quantities and quantities[ticket_type] > 0:
+        quantities[ticket_type] -= 1
+        session['quantities'] = quantities
+    return redirect(request.referrer or url_for('main.index'))

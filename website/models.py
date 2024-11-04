@@ -1,6 +1,7 @@
-from . import db
-from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+
+db = SQLAlchemy()
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -19,6 +20,8 @@ class Event(db.Model):
     name=db.Column(db.String(100), nullable=False)
     description=db.Column(db.String(1000), nullable=False)
     genre=db.Column(db.String(200), nullable=False)
+    photo=db.Column(db.String(200), nullable=False)
+    status=db.Column(db.String(200), nullable=False)
     location=db.Column(db.String(200),nullable=False)
     time=db.Column(db.DateTime,nullable=False)
     contact_number = db.Column(db.Integer, index=True, nullable=False)
