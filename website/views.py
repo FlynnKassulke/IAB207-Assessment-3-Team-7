@@ -16,28 +16,31 @@ def index():
     events = Event.query.all()
     return render_template('index.html', events=events)
 
-@main_bp.route('/event/', methods=['GET'])
-def event_details():
-    event = Event.query.get_or_404()
+@main_bp.route('/event/<int:event_id>', methods=['GET'])
+def event_details(event_id):
+    event = Event.query.get_or_404(event_id)
     quantities = session.get('quantities', {
         "standard-adult": 0,
         "standard-concession": 0,
         "vip-seasons-package": 0
     })
 
+    # Define ticket prices here
     ticket_prices = {
         "standard-adult": 152.68,
         "standard-concession": 877.55,
         "vip-seasons-package": 1412.78
     }
-    total_ticket_cost = sum(quantities[ticket] * ticket_prices[ticket] for ticket in quantities)
+    total_ticket_cost = sum(quantities[ticket] * ticket_prices.get(ticket, 0) for ticket in quantities)
     booking_fee = 10
     final_cost = total_ticket_cost + booking_fee
 
+    # Pass ticket_prices and other context variables to the template
     return render_template(
         'Event Details.html',
         event=event,
         quantities=quantities,
+        ticket_prices=ticket_prices,
         total_ticket_cost=total_ticket_cost,
         final_cost=final_cost
     )
