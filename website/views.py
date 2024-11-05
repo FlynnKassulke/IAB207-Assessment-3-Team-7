@@ -3,11 +3,13 @@ from werkzeug.security import generate_password_hash
 from flask import render_template, request
 from datetime import datetime
 from .models import Event
-#from . import main_bp
 from flask import Blueprint, render_template, session, request, redirect, url_for
-from .models import db, Event
+from .models import db,Event, User
+from .forms import RegisterForm
+
 
 app = Flask(__name__)
+
 main_bp = Blueprint('main', __name__)
 MyAccount_bp = Blueprint('MyAccount', __name__)
 
@@ -83,20 +85,40 @@ def login():
 
 @main_bp.route('/register', methods =["GET","POST"])
 def register():
+    
+    form=RegisterForm()
+    print(form.contact_number.data,form.street_address.data)
     if request.method == "POST":
-        user_name = request.form.get("username")
-        email = request.form.get("email")
-        password = request.form.get("password")
-        contact_number = request.form.get("contact_number")
-        street_address = request.form.get("street_address")
-
-        if not (user_name and email and password and contact_number and street_address):
-            return render_template('Register Page.html', message="All fields are required")
         
-        hashed_pass = generate_password_hash(password)
+            print("Form validation passed")
+            hashed_pass = generate_password_hash(form.password_hash.data)
+            new_user = User(
+                name=form.name.data,
+                emailid=form.emailid.data,
+                password_hash=hashed_pass,
+                contact_number=form.contact_number.data,
+                street_address=form.street_address.data
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for('main.login'))
+           
+        
+        
 
-        return redirect('/login')
+    
 
+        
+       
+   
+        
+
+       
+
+
+   
+
+        
     return render_template('Register Page.html')
 
 # Define index and event details route as before

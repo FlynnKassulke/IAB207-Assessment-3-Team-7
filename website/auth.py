@@ -5,6 +5,7 @@ from .models import User
 from .forms import LoginForm, RegisterForm
 from . import db
 from flask import Flask
+from .models import db, Event
 
 app = Flask(__name__)
 # Create a blueprint - make sure all BPs have unique names

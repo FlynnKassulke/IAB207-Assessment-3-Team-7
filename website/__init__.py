@@ -1,10 +1,14 @@
-# __init__.py
+#__init__.py
 from flask import Flask
 from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager
 from datetime import datetime
 
+
+
+
 def create_app():
+    from flask import Flask
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///website.db'
     app.secret_key = 'somesecretkey'
