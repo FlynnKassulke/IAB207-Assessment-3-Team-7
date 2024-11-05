@@ -100,35 +100,30 @@
 
     <div class="container mt-4">
       <h2>Event Comments</h2>
-
+    
       <!-- Comment Display Section -->
       <div id="comment-section" class="mb-4">
         <h5>Comments:</h5>
         <ul id="comment-list" class="list-group">
-          <!-- Existing comments will be appended here -->
+          {% for comment in comments %}
           <li class="list-group-item">
-            <strong>MileyLee:</strong> The last one was so good!
-            <a class="date">27 Sep 2024</a>
+            <strong>You:</strong> {{ comment.comment }}
+            <a class="date">{{ comment.date_posted.strftime('%d %b %Y') }}</a>
           </li>
-          <li class="list-group-item">
-            <strong>HeavyBass153:</strong> Looking forward to attending! I LOVE Flume!
-            <a class="date">23 Sep 2024</a>
-          </li>
+          {% else %}
+          <li class="list-group-item">No comments yet. Be the first to comment!</li>
+          {% endfor %}
         </ul>
       </div>
-
+    
       <!-- Comment Post Form -->
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Post a Comment</h5>
-          <form id="comment-form">
-            <div class="mb-3">
-              <label for="username" class="form-label">Name:</label>
-              <input type="text" class="form-control" id="username" placeholder="Enter your name" required>
-            </div>
+          <form method="POST">
             <div class="mb-3">
               <label for="comment" class="form-label">Comment:</label>
-              <textarea class="form-control" id="comment" rows="3" placeholder="Enter your comment" required></textarea>
+              <textarea name="comment" class="form-control" id="comment" rows="3" placeholder="Enter your comment" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Post Comment</button>
           </form>

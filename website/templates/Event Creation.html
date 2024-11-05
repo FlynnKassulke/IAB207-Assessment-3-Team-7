@@ -5,24 +5,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>HitsOnDeck - Create an Event</title>
-  <link rel="shortcut icon" href="static\img\HitsOnDeckLogo.png"/>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/HitsOnDeckLogo.png') }}" />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  
-  <link rel="stylesheet" href="static\css\styling.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styling.css') }}">
 </head>
-
 
 <body>
   <header>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg sticky-top" data-bs-theme="dark">
       <div class="container">
-        <a class="navbar-brand" href="{{ url_for('main.index') }}"><img src="static/img/HitsOnDeckTransparent.png" alt="Logo" width="120"
-            height="80" class="d-inline-block align-text-top"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="{{ url_for('main.index') }}">
+          <img src="{{ url_for('static', filename='img/HitsOnDeckTransparent.png') }}" alt="Logo" width="120" height="80" class="d-inline-block align-text-top">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -46,196 +44,129 @@
         </div>
       </div>
     </nav>
-
   </header>
 
-
   <main>
-    <!-- Title  -->
+    <!-- Title -->
     <div class="container.fluid text-center mt-3">
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <h1 class=" card accentColour whiteHeading">Create Your Event!</h1>
+          <h1 class="card accentColour whiteHeading">Create Your Event!</h1>
         </div>
-
       </div>
     </div>
-    <div>
-      <div>
-        <div class="container bg-light p-4">
-          <div class="row mb-3">
-            <!-- Title -->
-            <div class="col-md-6">
-              <label for="title" class="form-label">Title:</label>
-              <input type="text" class="form-control" id="title" placeholder="Enter title">
-            </div>
-            <!-- Venue -->
-            <div class="col-md-6">
-              <label for="venue" class="form-label">Venue:</label>
-              <input type="text" class="form-control" id="venue" placeholder="Enter venue">
-            </div>
+
+    <!-- Event Creation Form -->
+    <form action="{{ url_for('main.event_creation') }}" method="POST">
+      <div class="container bg-light p-4">
+        <div class="row mb-3">
+          <!-- Title -->
+          <div class="col-md-6">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" required>
           </div>
-      
-          <div class="row mb-3">
-            <!-- Description -->
-            <div class="col-md-6">
-              <label for="description" class="form-label">Description:</label>
-              <textarea class="form-control" id="description" rows="5" placeholder="Enter description"></textarea>
-      
-              <!-- Photos Carousel Section with Adjusted Size -->
-              <div class="row mb-3">
-                <div class="col-md-6">
-                  <label for="photos" class="form-label">Photos:</label>
-                  <div id="photoCarousel" class="carousel slide" data-bs-ride="carousel" style="width: 100%; max-width: 500px; max-height: 200px;">
-                    <div class="carousel-inner">
-                      <div class="carousel-item active">
-                        <img src="static\img\HitsOnDeckLogo.png" class="d-block w-100" alt="Image 1" style="height: 200px;">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="static\img\noImage.jpg" class="d-block w-100" alt="Image 2" style="height: 200px;">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="static\img\noImage.jpg" class="d-block w-100" alt="Image 3" style="height: 200px;">
-                      </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#photoCarousel" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#photoCarousel" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                    </button>
-                  </div>
-                </div>
-      
-                <div class="col-md-6 d-flex flex-column justify-content-end">
-                  <!-- Move buttons below the carousel and center them -->
-                  <div class="d-flex flex-column justify-content-start">
-                    <button type="button" class="btn btn-outline-secondary mb-2">Add</button>
-                    <button type="button" class="btn btn-outline-danger">Delete</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-      
-            <!-- Genre, Artist, When, Tickets -->
-            <div class="col-md-6">
-              <div class="mb-3">
-                <label for="genre" class="form-label">Genre/s:</label>
-                <input type="text" class="form-control" id="genre" placeholder="Enter genre">
-              </div>
-              <div class="mb-3">
-                <label for="artist" class="form-label">Artist/s:</label>
-                <input type="text" class="form-control" id="artist" placeholder="Enter artist">
-              </div>
-              <div class="mb-3">
-                <label for="when" class="form-label">When:</label>
-                <input type="text" class="form-control" id="when" placeholder="Enter date and time">
-              </div>
-              <!-- Name and Ticket input fields with Add button -->
-              <div class="mb-3 card smallBuffer">
-                <label for="ticket-name" class="form-label">Ticket Name:</label>
-                <input type="text" class="form-control mb-2" id="ticket-name" placeholder="Enter ticket name">
-                <label for="ticket-price" class="form-label">Price:</label>
-                <div class="input-group">
-                  <span class="input-group-text">$</span>
-                  <input type="text" class="form-control" id="ticket-price" placeholder="Enter ticket price">
-                  <button class="btn btn-primary" type="button" id="addTicketButton">Add</button>
-                </div>
-              </div>
-            </div>
+          <!-- Venue -->
+          <div class="col-md-6">
+            <label for="venue" class="form-label">Venue:</label>
+            <input type="text" class="form-control" id="venue" name="venue" placeholder="Enter venue" required>
           </div>
-      
-          <!-- Tickets Section -->
-          <div class="row mb-3">
-            <div class="col-md-12">
-              <h5>Tickets</h5>
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Ticket Name</th>
-                    <th>Price</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Example Ticket 1</td>
-                    <td>$50</td>
-                    <td><button class="btn btn-danger btn-sm">Delete</button></td>
-                  </tr>
-                  <tr>
-                    <td>Example Ticket 2</td>
-                    <td>$75</td>
-                    <td><button class="btn btn-danger btn-sm">Delete</button></td>
-                  </tr>
-                </tbody>
-              </table>
+        </div>
+
+        <div class="row mb-3">
+          <!-- Description -->
+          <div class="col-md-6">
+            <label for="description" class="form-label">Description:</label>
+            <textarea class="form-control" id="description" name="description" rows="5" placeholder="Enter description" required></textarea>
+          </div>
+          
+          
+          <!-- Genre, Artist, When -->
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="genre" class="form-label">Genre/s:</label>
+              <input type="text" class="form-control" id="genre" name="genre" placeholder="Enter genre" required>
+            </div>
+            <div class="mb-3">
+              <label for="artist" class="form-label">Artist/s:</label>
+              <input type="text" class="form-control" id="artist" name="artist" placeholder="Enter artist" required>
+            </div>
+            <div class="mb-3">
+              <label for="when" class="form-label">When:</label>
+              <input type="datetime-local" class="form-control" id="when" name="when" required>
+            </div>
+            <div class="mb-3">
+              <label for="contact_number" class="form-label">Contact Number:</label>
+              <input type="text" class="form-control" id="contact_number" name="contact_number" required>
+            </div>
+            <div class="mb-3">
+              <label for="street_address" class="form-label">Street Address:</label>
+              <input type="text" class="form-control" id="street_address" name="street_address" required>
             </div>
           </div>
         </div>
+
+        <!-- Tickets Section -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <h5>Tickets</h5>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Ticket Name</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Standard (Consession)</td>
+                  <td>$100</td>
+                </tr>
+                <tr>
+                  <td>Standard (Adult)</td>
+                  <td>$150</td>
+                </tr>
+                <tr>
+                  <td>VIP</td>
+                  <td>$500</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      
-    </div>
 
-    <div class="text-center smallBuffer">
-      <button type="button" class="btn btn-success btn-lg" disabled>Create Event!</button>
-    </div>
-
+      <!-- Submit Button -->
+      <div class="text-center smallBuffer">
+        <button type="submit" class="btn btn-success btn-lg">Create Event!</button>
+      </div>
+    </form>
   </main>
 
-
-  <!-- Footer  -->
+  <!-- Footer -->
   <footer>
     <div class="container.fluid text-center">
       <div class="row">
         <div class="col">
           <h1>About Us</h1>
-          <p>At HitsOnDeck, we're passionate about music and live experiences. 
-            Our platform connects music lovers with the festivals and concerts they love,
-             while also empowering event organizers to create, manage, and sell tickets 
-             effortlessly. Whether you're a fan or a promoter, HitsOnDeck is designed to 
-             elevate your festival experience.
-          </p>
+          <p>At HitsOnDeck, we're passionate about music and live experiences...</p>
         </div>
         <div class="col">
           <h1>Get Help</h1>
-          <p>Need assistance? We're here to help! Visit our Help Center for FAQs, 
-            troubleshooting tips, and customer support. Whether you’re having issues 
-            with ticket purchases or setting up your event, we've got you covered. 
-            Contact us anytime, and our support team will ensure you get back to enjoying the music.
-          </p>
+          <p>Need assistance? We're here to help!</p>
         </div>
         <div class="col">
           <h1>Creating an Event?</h1>
-          <p>Ready to host your own festival? With HitsOnDeck, creating and managing your event has 
-            never been easier. Our platform offers a step-by-step guide to help you set up your festival, 
-            customize ticket options, and reach your audience. Join our growing community of festival 
-            creators and make your event a success!
-          </p>
+          <p>Ready to host your own festival?</p>
         </div>
         <div class="col">
           <h1>Terms & Services</h1>
-          <p>By using HitsOnDeck, you agree to our Terms & Services. We’re committed to providing a safe, 
-            secure, and enjoyable experience for all users. Please review our terms to learn more about 
-            your rights and responsibilities as a buyer or seller on our platform.
-          </p>
+          <p>By using HitsOnDeck, you agree to our Terms & Services.</p>
         </div>
       </div>
     </div>
   </footer>
 
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>
