@@ -3,7 +3,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from .models import Event, Comment, db, User
 from .forms import RegisterForm, LoginForm
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user, LoginManager
+from .models import Event, Comment, db, User, Order 
+
+
+
 
 app = Flask(__name__)
 main_bp = Blueprint('main', __name__)
@@ -12,8 +16,10 @@ MyAccount_bp = Blueprint('MyAccount', __name__)
 @main_bp.route('/')
 def index():
     events = Event.query.all()
+    print(current_user)
     return render_template('index.html', events=events)
 
+# Assuming your main_bp blueprint already exists as shown in your provided code
 @main_bp.route('/event/<int:event_id>', methods=['GET', 'POST'])
 def event_details(event_id):
     event = Event.query.get_or_404(event_id)
@@ -37,24 +43,37 @@ def event_details(event_id):
     comments = Comment.query.filter_by(eventid=event_id).order_by(Comment.date_posted.desc()).all()
 
     if request.method == 'POST':
-        # Get form data
-        comment_text = request.form.get('comment')
-        
-        # Create a new Comment instance
-        new_comment = Comment(
-            comment=comment_text,
-            date_posted=datetime.now(),
-            eventid=event_id
-            #userid=user_id
-        )
-        
-        # Add and commit the new comment to the database
-        db.session.add(new_comment)
-        db.session.commit()
-        
-        return redirect(url_for('main.event_details', event_id=event_id))
+        if 'quantities' in request.form:
+            # Create a new Order instance for the purchase
+            new_order = Order(
+                total=final_cost,
+                timebooked=datetime.now(),
+                eventid=event_id  # Associate the order with the event
+            )
+            db.session.add(new_order)
 
-    # Pass ticket_prices, comments, and other context variables to the template
+            # Update the sold tickets count
+            total_tickets_sold = sum(quantities.values())  # Calculate total tickets bought
+            event.sold_tickets += total_tickets_sold
+            db.session.commit()
+
+            flash('Tickets purchased successfully!', 'success')
+            return redirect(url_for('main.my_account'))
+
+        # Handle comment form submission
+        comment_text = request.form.get('comment')
+        if comment_text:
+            new_comment = Comment(
+                comment=comment_text,
+                date_posted=datetime.now(),
+                eventid=event_id,
+                # userid=current_user.id  # Uncomment if you have a user relationship in comments
+            )
+            db.session.add(new_comment)
+            db.session.commit()
+
+            return redirect(url_for('main.event_details', event_id=event_id))
+
     return render_template(
         'Event Details.html',
         event=event,
@@ -101,6 +120,7 @@ def event_creation():
         event_time = request.form.get('when')
         contact_number = request.form.get('contact_number')
         street_address = request.form.get('street_address')
+        total_tickets = request.form.get('total_tickets')
         status = "Open"
 
         # Convert date/time to datetime object
@@ -109,21 +129,32 @@ def event_creation():
         except ValueError:
             flash("Incorrect date format. Please use 'YYYY-MM-DD HH:MM'")
             return redirect(url_for('main.event_creation'))
-        
-        
 
+        # Validate total_tickets
+        try:
+            total_tickets = int(total_tickets)
+            if total_tickets <= 0:
+                flash("Total tickets must be a positive integer.")
+                return redirect(url_for('main.event_creation'))
+        except (ValueError, TypeError):
+            flash("Total tickets must be a valid number.")
+            return redirect(url_for('main.event_creation'))
 
         # Create and save the new event
         new_event = Event(
             name=title,
             description=description,
             genre=genre,
-            photo="/img/HitsOnDeckLogo.jpg",  # Placeholder or default image path
-            status="Open",  # Default status
+            photo="/img/HitsOnDeckLogo.png",  # Placeholder or default image path
+            status=status,  # Default status
             location=venue,
             time=event_time,  # Now a datetime object
             contact_number=contact_number,
-            street_address=street_address
+            street_address=street_address,
+            total_tickets=total_tickets,
+            sold_tickets=0,  # Default value for new event
+            userid=current_user.id  # Associate event with the logged-in user's id
+
         )
 
         db.session.add(new_event)
@@ -134,10 +165,14 @@ def event_creation():
 
     return render_template('Event Creation.html')
 
+
 @main_bp.route('/my-account')
+@login_required
 def my_account():
-    events = Event.query.all()  # Query all events
-    return render_template('My Account.html', events=events)
+    #events = Event.query.all()  # Query all events
+    user = current_user
+    user_events = Event.query.filter_by(userid=current_user.id).all()
+    return render_template('My Account.html', events=user_events, user=user)
 
 @main_bp.route('/save-event-changes/<int:event_id>', methods=['POST'])
 def save_event_changes(event_id):

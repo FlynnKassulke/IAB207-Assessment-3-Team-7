@@ -18,8 +18,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg sticky-top" data-bs-theme="dark">
       <div class="container">
-        <a class="navbar-brand" href="{{ url_for('main.index') }}"><img src="static/img/HitsOnDeckTransparent.png" alt="Logo" width="120"
-            height="80" class="d-inline-block align-text-top"></a>
+        <a class="navbar-brand" href="{{ url_for('main.index') }}"><img src="static/img/HitsOnDeckTransparent.png"
+            alt="Logo" width="120" height="80" class="d-inline-block align-text-top"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -29,18 +29,21 @@
             <h2 class="nav-item">
               <a class="nav-link active" aria-current="page" href="{{ url_for('main.index') }}">Home</a>
             </h2>
-            <h2 class="nav-item">
-              <a class="nav-link" href="{{ url_for('main.event_details', event_id=1) }}">Book Event</a>
-            </h2>
+            {% if current_user.is_authenticated %}
             <h2 class="nav-item">
               <a class="nav-link" href="{{ url_for('main.event_creation') }}">Create Event</a>
             </h2>
             <h2 class="nav-item">
               <a class="nav-link" href="{{ url_for('main.my_account') }}">My Account</a>
             </h2>
+            {% endif %}
             <h2 class="nav-item">
-              <a class="btn btn-outline-light" href="{{ url_for('main.login') }}">Login</a>
-            </h2>
+              {% if current_user.is_authenticated %}
+                <a class="btn btn-outline-light" href="{{ url_for('main.logout') }}">Sign Out</a>
+              {% else %}
+                <a class="btn btn-outline-light" href="{{ url_for('main.login') }}">Login</a>
+              {% endif %}
+            </h2>            
           </ul>
         </div>
       </div>

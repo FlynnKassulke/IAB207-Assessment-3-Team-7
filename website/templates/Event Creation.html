@@ -17,10 +17,10 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg sticky-top" data-bs-theme="dark">
       <div class="container">
-        <a class="navbar-brand" href="{{ url_for('main.index') }}">
-          <img src="{{ url_for('static', filename='img/HitsOnDeckTransparent.png') }}" alt="Logo" width="120" height="80" class="d-inline-block align-text-top">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="{{ url_for('main.index') }}"><img src="static/img/HitsOnDeckTransparent.png"
+            alt="Logo" width="120" height="80" class="d-inline-block align-text-top"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -28,15 +28,21 @@
             <h2 class="nav-item">
               <a class="nav-link active" aria-current="page" href="{{ url_for('main.index') }}">Home</a>
             </h2>
+            {% if current_user.is_authenticated %}
             <h2 class="nav-item">
               <a class="nav-link" href="{{ url_for('main.event_creation') }}">Create Event</a>
             </h2>
             <h2 class="nav-item">
               <a class="nav-link" href="{{ url_for('main.my_account') }}">My Account</a>
             </h2>
+            {% endif %}
             <h2 class="nav-item">
-              <a class="btn btn-outline-light" href="{{ url_for('main.login') }}">Login</a>
-            </h2>
+              {% if current_user.is_authenticated %}
+                <a class="btn btn-outline-light" href="{{ url_for('main.logout') }}">Sign Out</a>
+              {% else %}
+                <a class="btn btn-outline-light" href="{{ url_for('main.login') }}">Login</a>
+              {% endif %}
+            </h2>            
           </ul>
         </div>
       </div>
@@ -73,10 +79,16 @@
           <!-- Description -->
           <div class="col-md-6">
             <label for="description" class="form-label">Description:</label>
-            <textarea class="form-control" id="description" name="description" rows="5" placeholder="Enter description" required></textarea>
+            <textarea class="form-control" id="description" name="description" rows="5" placeholder="Enter description"
+              required></textarea>
           </div>
-          
-          
+          <!-- Total Tickets -->
+          <div class="col-md-6">
+            <label for="total_tickets" class="form-label">Total Tickets:</label>
+            <input type="number" class="form-control" id="total_tickets" name="total_tickets"
+              placeholder="Enter total number of tickets" required>
+          </div>
+
           <!-- Genre, Artist, When -->
           <div class="col-md-6">
             <div class="mb-3">
@@ -163,7 +175,9 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

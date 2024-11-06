@@ -29,14 +29,20 @@
             <h2 class="nav-item">
               <a class="nav-link active" aria-current="page" href="{{ url_for('main.index') }}">Home</a>
             </h2>
+            {% if current_user.is_authenticated %}
             <h2 class="nav-item">
               <a class="nav-link" href="{{ url_for('main.event_creation') }}">Create Event</a>
             </h2>
             <h2 class="nav-item">
               <a class="nav-link" href="{{ url_for('main.my_account') }}">My Account</a>
             </h2>
+            {% endif %}
             <h2 class="nav-item">
+              {% if current_user.is_authenticated %}
+              <a class="btn btn-outline-light" href="{{ url_for('main.logout') }}">Sign Out</a>
+              {% else %}
               <a class="btn btn-outline-light" href="{{ url_for('main.login') }}">Login</a>
+              {% endif %}
             </h2>
           </ul>
         </div>
@@ -118,6 +124,7 @@
       <div class="border p-3 mb-4 bg-dark">
         <h5 class="accentColour whiteText p-2">YOUR EVENTS</h5>
         <div class="row">
+          {% if events %}
           {% for event in events %}
           <div class="col-md-12 bg-secondary text-center border-bottom card mb-5">
             <form method="POST" action="{{ url_for('main.save_event_changes', event_id=event.id) }}">
@@ -180,126 +187,10 @@
             </form>
           </div>
           {% endfor %}
+          {% else %}
+          <p class="text-white">You have no events.</p>
+          {% endif %}
         </div>
-      </div>
-
-      <!-- Account Details Section -->
-      <div class="border p-3 mb-4">
-        <h5 class="accentColour whiteText p-2">ACCOUNT DETAILS</h5>
-        <form>
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label for="email" class="form-label">Email:</label>
-              <input type="email" class="form-control" id="email" value="flynn.kassulke@gmail.com">
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label for="firstName" class="form-label">First name:</label>
-              <input type="text" class="form-control" id="firstName" value="Flynn">
-            </div>
-            <div class="col-md-6">
-              <label for="lastName" class="form-label">Last name:</label>
-              <input type="text" class="form-control" id="lastName" value="Kassulke">
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col-md-4">
-              <label for="dob" class="form-label">Date of birth:</label>
-              <div class="input-group">
-                <select class="form-select" id="day">
-                  <option selected>11</option>
-                </select>
-                <select class="form-select" id="month">
-                  <option selected>JUN</option>
-                </select>
-                <select class="form-select" id="year">
-                  <option selected>2002</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <label for="gender" class="form-label">Gender:</label>
-              <div>
-                <input type="radio" id="male" name="gender" checked>
-                <label for="male">Male</label>
-                <input type="radio" id="female" name="gender">
-                <label for="female">Female</label>
-                <input type="radio" id="nonspecific" name="gender">
-                <label for="nonspecific">Non-specific</label>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <label for="phone" class="form-label">Phone number:</label>
-              <input type="text" class="form-control" id="phone" value="+61452437070">
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col-md-4">
-              <label for="country" class="form-label">Country:</label>
-              <select class="form-select" id="country">
-                <option selected>Australia</option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <label for="state" class="form-label">State:</label>
-              <select class="form-select" id="state">
-                <option selected>QLD</option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <label for="postcode" class="form-label">Postcode:</label>
-              <input type="text" class="form-control" id="postcode" value="4209">
-            </div>
-          </div>
-
-          <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-outline-success">SAVE DETAILS</button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Password Reset Section -->
-      <div class="border p-3 mb-4">
-        <h5 class="accentColour whiteText p-2">PASSWORD RESET</h5>
-        <form>
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label for="currentPassword" class="form-label">Current password:</label>
-              <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label for="newPassword" class="form-label">New password:</label>
-              <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
-            </div>
-            <div class="col-md-6">
-              <label for="confirmPassword" class="form-label">Confirm password:</label>
-              <input type="password" class="form-control" id="confirmPassword" placeholder="Enter confirm new password">
-            </div>
-          </div>
-
-          <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-outline-success">RESET PASSWORD</button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Delete Account -->
-      <div class="border p-3 mb-4">
-        <h5 class="accentColour whiteText p-2">DELETE ACCOUNT</h5>
-        <form>
-
-          <div class="d-grid gap-2">
-            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-              data-bs-target="#exampleModal">DELETE ACCOUNT</button>
-          </div>
-        </form>
       </div>
 
       <!-- Modal -->

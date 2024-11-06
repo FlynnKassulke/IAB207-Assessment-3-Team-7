@@ -1,25 +1,24 @@
-#__init__.py
 from flask import Flask
 from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager
 from datetime import datetime
 
-
-
-
 def create_app():
-    from flask import Flask
+    # Create Flask app
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///website.db'
     app.secret_key = 'somesecretkey'
 
-    # Local import to avoid circular import issues
+    # Initialize extensions
+    Bootstrap5(app)
+
+    # Import and initialize database
     from .models import db, Event, User
     db.init_app(app)
 
     with app.app_context():
         db.create_all()
-
+        # Populate sample data if no events exist
         if not Event.query.first():
             sample_events = [
                 Event(
@@ -32,8 +31,9 @@ def create_app():
                     time=datetime(2024, 12, 22),
                     contact_number=123456789,
                     street_address="Bondi Beach",
-                    total_tickets = 200,
-                    sold_tickets = 200
+                    total_tickets=200,
+                    sold_tickets=200,
+                    userid=100
                 ),
                 Event(
                     name="Rock Revolution 2024",
@@ -45,8 +45,9 @@ def create_app():
                     time=datetime(2024, 9, 14),
                     contact_number=987654321,
                     street_address="Thebarton Theatre",
-                    total_tickets = 200,
-                    sold_tickets = 200
+                    total_tickets=200,
+                    sold_tickets=200,
+                    userid=100
                 ),
                 Event(
                     name="Flume Live in Concert",
@@ -58,8 +59,9 @@ def create_app():
                     time=datetime(2024, 10, 8),
                     contact_number=112233445,
                     street_address="Riverstage",
-                    total_tickets = 200,
-                    sold_tickets = 200
+                    total_tickets=200,
+                    sold_tickets=200,
+                    userid=100
                 ),
                 Event(
                     name="Electric Pulse Festival",
@@ -71,8 +73,9 @@ def create_app():
                     time=datetime(2024, 8, 17),
                     contact_number=556677889,
                     street_address="Brisbane Showgrounds",
-                    total_tickets = 200,
-                    sold_tickets = 200
+                    total_tickets=200,
+                    sold_tickets=200,
+                    userid=100
                 ),
                 Event(
                     name="Jazz Fest 2024",
@@ -81,11 +84,12 @@ def create_app():
                     photo="/img/bluesbrewsthumbnail.png",
                     status="Open",
                     location="Melbourne Convention Centre, Melbourne, VIC",
-                    time=datetime(2024, 10, 15),
+                    time=datetime(2025, 10, 15),
                     contact_number=223344556,
                     street_address="Melbourne Convention Centre",
-                    total_tickets = 200,
-                    sold_tickets = 200
+                    total_tickets=200,
+                    sold_tickets=200,
+                    userid=100
                 ),
                 Event(
                     name="Country Fest",
@@ -97,23 +101,23 @@ def create_app():
                     time=datetime(2024, 11, 5),
                     contact_number=334455667,
                     street_address="Coffs Harbour",
-                    total_tickets = 200,
-                    sold_tickets = 200
+                    total_tickets=200,
+                    sold_tickets=200,
+                    userid=100
                 )
             ]
             db.session.bulk_save_objects(sample_events)
             db.session.commit()
 
-    Bootstrap5(app)
-
+    # Configure and initialize LoginManager
     login_manager = LoginManager(app)
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'auth.login'  # Assumes an 'auth' blueprint with a 'login' route
 
     @login_manager.user_loader
     def load_user(user_id):
         return db.session.get(User, user_id)
 
-    # Register blueprints after app is created
+    # Register blueprints
     from .views import main_bp
     app.register_blueprint(main_bp)
 

@@ -28,6 +28,8 @@ class Event(db.Model):
     street_address = db.Column(db.String(100), index=True, nullable=False)
     total_tickets = db.Column(db.Integer, nullable=False)
     sold_tickets = db.Column(db.Integer, nullable=False)
+    
+    userid=db.Column(db.Integer,db.ForeignKey('users.id'))
 
 
 class Comment(db.Model):

@@ -15,10 +15,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg sticky-top" data-bs-theme="dark">
       <div class="container">
-        <a class="navbar-brand" href="{{ url_for('main.index') }}"><img
-            src="{{ url_for('static', filename='img/HitsOnDeckTransparent.png') }}" alt="Logo" width="120" height="80"
-            class="d-inline-block align-text-top">
-        </a>
+        <a class="navbar-brand" href="{{ url_for('main.index') }}"><img src="static/img/HitsOnDeckTransparent.png"
+            alt="Logo" width="120" height="80" class="d-inline-block align-text-top"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -26,16 +24,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav w-100 d-flex justify-content-between px-5 mb-2 mb-lg-0">
             <h2 class="nav-item">
-              <a class="nav-link" aria-current="page" href="{{ url_for('main.index') }}">Home</a>
+              <a class="nav-link active" aria-current="page" href="{{ url_for('main.index') }}">Home</a>
             </h2>
+            {% if current_user.is_authenticated %}
             <h2 class="nav-item">
               <a class="nav-link" href="{{ url_for('main.event_creation') }}">Create Event</a>
             </h2>
             <h2 class="nav-item">
               <a class="nav-link" href="{{ url_for('main.my_account') }}">My Account</a>
             </h2>
+            {% endif %}
             <h2 class="nav-item">
+              {% if current_user.is_authenticated %}
+              <a class="btn btn-outline-light" href="{{ url_for('main.logout') }}">Sign Out</a>
+              {% else %}
               <a class="btn btn-outline-light" href="{{ url_for('main.login') }}">Login</a>
+              {% endif %}
             </h2>
           </ul>
         </div>
@@ -96,7 +100,7 @@
 
               <!-- Buy Tickets Button -->
               <div class="d-flex justify-content-center mt-3">
-                <button type="submit" class="btn btn-success btn-lg">Buy Tickets</button>
+                <button type="submit" name="quantities" class="btn btn-success btn-lg">Buy Tickets</button>
               </div>
             </form>
           </div>
