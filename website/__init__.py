@@ -29,9 +29,11 @@ def create_app():
                     photo="/img/summervibesfestthumbnail.png",
                     status="Sold Out",
                     location="Bondi Beach, Sydney, NSW",
-                    time=datetime(2024, 7, 22),
+                    time=datetime(2024, 12, 22),
                     contact_number=123456789,
-                    street_address="Bondi Beach"
+                    street_address="Bondi Beach",
+                    total_tickets = 200,
+                    sold_tickets = 200
                 ),
                 Event(
                     name="Rock Revolution 2024",
@@ -42,7 +44,9 @@ def create_app():
                     location="Thebarton Theatre, Adelaide, SA",
                     time=datetime(2024, 9, 14),
                     contact_number=987654321,
-                    street_address="Thebarton Theatre"
+                    street_address="Thebarton Theatre",
+                    total_tickets = 200,
+                    sold_tickets = 200
                 ),
                 Event(
                     name="Flume Live in Concert",
@@ -53,7 +57,9 @@ def create_app():
                     location="Riverstage, Brisbane, QLD",
                     time=datetime(2024, 10, 8),
                     contact_number=112233445,
-                    street_address="Riverstage"
+                    street_address="Riverstage",
+                    total_tickets = 200,
+                    sold_tickets = 200
                 ),
                 Event(
                     name="Electric Pulse Festival",
@@ -64,7 +70,9 @@ def create_app():
                     location="Brisbane Showgrounds, Brisbane, QLD",
                     time=datetime(2024, 8, 17),
                     contact_number=556677889,
-                    street_address="Brisbane Showgrounds"
+                    street_address="Brisbane Showgrounds",
+                    total_tickets = 200,
+                    sold_tickets = 200
                 ),
                 Event(
                     name="Jazz Fest 2024",
@@ -75,7 +83,9 @@ def create_app():
                     location="Melbourne Convention Centre, Melbourne, VIC",
                     time=datetime(2024, 10, 15),
                     contact_number=223344556,
-                    street_address="Melbourne Convention Centre"
+                    street_address="Melbourne Convention Centre",
+                    total_tickets = 200,
+                    sold_tickets = 200
                 ),
                 Event(
                     name="Country Fest",
@@ -86,7 +96,9 @@ def create_app():
                     location="Coffs Harbour, NSW",
                     time=datetime(2024, 11, 5),
                     contact_number=334455667,
-                    street_address="Coffs Harbour"
+                    street_address="Coffs Harbour",
+                    total_tickets = 200,
+                    sold_tickets = 200
                 )
             ]
             db.session.bulk_save_objects(sample_events)

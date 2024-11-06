@@ -18,8 +18,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg sticky-top" data-bs-theme="dark">
       <div class="container">
-        <a class="navbar-brand" href="{{ url_for('main.index') }}"><img src="static/img/HitsOnDeckTransparent.png" alt="Logo" width="120"
-            height="80" class="d-inline-block align-text-top"></a>
+        <a class="navbar-brand" href="{{ url_for('main.index') }}"><img src="static/img/HitsOnDeckTransparent.png"
+            alt="Logo" width="120" height="80" class="d-inline-block align-text-top"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -30,10 +30,7 @@
               <a class="nav-link active" aria-current="page" href="{{ url_for('main.index') }}">Home</a>
             </h2>
             <h2 class="nav-item">
-              <a class="nav-link" href="{{ url_for('main.event_details', event_id=1) }}">Book Event</a>
-            </h2>
-            <h2 class="nav-item">
-              <a class="nav-link" href="{{ url_for('main.event_creation') }}">Your Events</a>
+              <a class="nav-link" href="{{ url_for('main.event_creation') }}">Create Event</a>
             </h2>
             <h2 class="nav-item">
               <a class="nav-link" href="{{ url_for('main.my_account') }}">My Account</a>
@@ -61,7 +58,7 @@
               <div class="col-12 col-md-6">
                 <img src="static\img\flumethumbnail.png" class="img-thumbnail" alt="..." width="175" height="175">
               </div>
-        
+
               <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
                 <p><strong>Flume Live in Concert</strong></p>
                 <p>Riverstage Brisbane, QLD</p>
@@ -73,14 +70,15 @@
               </div>
             </div>
           </div>
-        
+
           <!-- SummerVibes Festival -->
           <div class="col-md-6 text-center border-bottom card">
             <div class="row"> <!-- New row to align image and text side by side -->
               <div class="col-12 col-md-6">
-                <img src="static\img\summervibesfestthumbnail.png" class="img-thumbnail" alt="..." width="175" height="175">
+                <img src="static\img\summervibesfestthumbnail.png" class="img-thumbnail" alt="..." width="175"
+                  height="175">
               </div>
-        
+
               <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
                 <p><strong>Summer Vibes Festival</strong></p>
                 <p>Bondi Beach, Sydney, NSW</p>
@@ -92,14 +90,15 @@
               </div>
             </div>
           </div>
-        
+
           <!-- Electric Pulse Festival -->
           <div class="col-md-6 text-center border-bottom card">
             <div class="row"> <!-- New row to align image and text side by side -->
               <div class="col-12 col-md-6">
-                <img src="static\img\electricpulsethumbnail.png" class="img-thumbnail" alt="..." width="175" height="175">
+                <img src="static\img\electricpulsethumbnail.png" class="img-thumbnail" alt="..." width="175"
+                  height="175">
               </div>
-        
+
               <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
                 <p><strong>Electric Pulse Festival</strong></p>
                 <p>Brisbane Showgrounds, Brisbane, QLD</p>
@@ -112,7 +111,76 @@
             </div>
           </div>
         </div>
-        
+
+      </div>
+
+      <!-- Your Events Section -->
+      <div class="border p-3 mb-4 bg-dark">
+        <h5 class="accentColour whiteText p-2">YOUR EVENTS</h5>
+        <div class="row">
+          {% for event in events %}
+          <div class="col-md-12 bg-secondary text-center border-bottom card mb-5">
+            <form method="POST" action="{{ url_for('main.save_event_changes', event_id=event.id) }}">
+              <!-- Update action URL as needed -->
+              <div class="row">
+                <!-- Title -->
+                <div class="col-md-12 mb-3">
+                  <label for="title{{ event.id }}" class="form-label text-white">Title:</label>
+                  <input type="text" class="form-control" id="title{{ event.id }}" name="title" value="{{ event.name }}"
+                    required>
+                </div>
+                <!-- Venue -->
+                <div class="col-md-12 mb-3">
+                  <label for="venue{{ event.id }}" class="form-label text-white">Venue:</label>
+                  <input type="text" class="form-control" id="venue{{ event.id }}" name="venue"
+                    value="{{ event.location }}" required>
+                </div>
+                <!-- Date and Time -->
+                <div class="col-md-12 mb-3">
+                  <label for="date{{ event.id }}" class="form-label text-white">Date and Time:</label>
+                  <input type="datetime-local" class="form-control" id="date{{ event.id }}" name="date"
+                    value="{{ event.time.strftime('%Y-%m-%dT%H:%M') }}" required>
+                </div>
+                <!-- Description -->
+                <div class="col-md-12 mb-3">
+                  <label for="description{{ event.id }}" class="form-label text-white">Description:</label>
+                  <textarea class="form-control" id="description{{ event.id }}" name="description" rows="4"
+                    required>{{ event.description }}</textarea>
+                </div>
+                <!-- Contact Number -->
+                <div class="col-md-12 mb-3">
+                  <label for="contact{{ event.id }}" class="form-label text-white">Contact Number:</label>
+                  <input type="text" class="form-control" id="contact{{ event.id }}" name="contact_number"
+                    value="{{ event.contact_number }}" required>
+                </div>
+                <!-- Street Address -->
+                <div class="col-md-12 mb-3">
+                  <label for="address{{ event.id }}" class="form-label text-white">Street Address:</label>
+                  <input type="text" class="form-control" id="address{{ event.id }}" name="street_address"
+                    value="{{ event.street_address }}" required>
+                </div>
+                <!-- Genre -->
+                <div class="col-md-12 mb-3">
+                  <label for="genre{{ event.id }}" class="form-label text-white">Genre:</label>
+                  <input type="text" class="form-control" id="genre{{ event.id }}" name="genre"
+                    value="{{ event.genre }}" required>
+                </div>
+                <!-- Ticket Information -->
+                <div class="col-md-12 mb-3">
+                  <label for="total_tickets{{ event.id }}" class="form-label text-white">Total Tickets:</label>
+                  <input type="number" class="form-control" id="total_tickets{{ event.id }}" name="total_tickets"
+                    value="{{ event.total_tickets }}" required>
+                </div>
+              </div>
+              <!-- Save and Cancel Buttons -->
+              <div class="d-flex justify-content-center mt-3 mb-3">
+                <button type="submit" class="btn btn-success me-3">Save</button>
+                <button type="button" class="btn btn-danger">Cancel</button>
+              </div>
+            </form>
+          </div>
+          {% endfor %}
+        </div>
       </div>
 
       <!-- Account Details Section -->
@@ -228,7 +296,8 @@
         <form>
 
           <div class="d-grid gap-2">
-            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">DELETE ACCOUNT</button>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+              data-bs-target="#exampleModal">DELETE ACCOUNT</button>
           </div>
         </form>
       </div>
@@ -242,7 +311,8 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              Deleting your account is permanent, and cannot be undone. You will lose access to your events and purchased tickets. Are you sure you want to delete this account?
+              Deleting your account is permanent, and cannot be undone. You will lose access to your events and
+              purchased tickets. Are you sure you want to delete this account?
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>

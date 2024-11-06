@@ -89,8 +89,6 @@ def events():
 
 @main_bp.route('/event-creation', methods=['GET', 'POST'])
 def event_creation():
-    print("Made it here")
-    print(request.method)
     if request.method == 'POST':
         print("Posting")
         # Collect form data
@@ -102,6 +100,7 @@ def event_creation():
         event_time = request.form.get('when')
         contact_number = request.form.get('contact_number')
         street_address = request.form.get('street_address')
+        status = "Open"
 
         # Convert date/time to datetime object
         try:
@@ -109,6 +108,9 @@ def event_creation():
         except ValueError:
             flash("Incorrect date format. Please use 'YYYY-MM-DD HH:MM'")
             return redirect(url_for('main.event_creation'))
+        
+        
+
 
         # Create and save the new event
         new_event = Event(
@@ -116,7 +118,7 @@ def event_creation():
             description=description,
             genre=genre,
             photo="/img/HitsOnDeckLogo.jpg",  # Placeholder or default image path
-            status="Upcoming",  # Default status
+            status="Open",  # Default status
             location=venue,
             time=event_time,  # Now a datetime object
             contact_number=contact_number,
@@ -133,7 +135,34 @@ def event_creation():
 
 @main_bp.route('/my-account')
 def my_account():
-    return render_template('My Account.html')
+    events = Event.query.all()  # Query all events
+    return render_template('My Account.html', events=events)
+
+@main_bp.route('/save-event-changes/<int:event_id>', methods=['POST'])
+def save_event_changes(event_id):
+    # Retrieve the event by ID
+    event = Event.query.get_or_404(event_id)
+    
+    # Update event fields with form data
+    event.name = request.form.get('name', event.name)  # Keep existing value if not provided
+    event.description = request.form.get('description', event.description)
+    event.genre = request.form.get('genre', event.genre)
+    event.location = request.form.get('location', event.location)
+    event.time = request.form.get('time', event.time)
+    event.contact_number = request.form.get('contact_number', event.contact_number)
+    event.street_address = request.form.get('street_address', event.street_address)
+    event.total_tickets = int(request.form.get('total_tickets', event.total_tickets))
+    event.sold_tickets = int(request.form.get('sold_tickets', event.sold_tickets))
+    
+    # You can add other fields here as necessary
+
+    # Save changes to the database
+    db.session.commit()
+
+    # Redirect back to the 'My Account' page (or any page you prefer)
+    flash('Event changes saved successfully!', 'success')
+    return redirect(url_for('main.my_account'))
+
 
 @main_bp.route('/login')
 def login():
@@ -162,7 +191,7 @@ def increment(ticket_type):
     quantities = session.get('quantities', {})
     ticket_limits = {
         "standard-adult": None,
-        "standard-concession": 2,
+        "standard-concession": None,
         "vip-seasons-package": 2
     }
     if ticket_type in quantities and (ticket_limits[ticket_type] is None or quantities[ticket_type] < ticket_limits[ticket_type]):

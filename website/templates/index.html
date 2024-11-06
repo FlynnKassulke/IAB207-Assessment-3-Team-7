@@ -29,9 +29,6 @@
               <a class="nav-link active" aria-current="page" href="{{ url_for('main.index') }}">Home</a>
             </h2>
             <h2 class="nav-item">
-              <a class="nav-link" href="{{ url_for('main.event_details', event_id=1) }}">Book Event</a>
-            </h2>
-            <h2 class="nav-item">
               <a class="nav-link" href="{{ url_for('main.event_creation') }}">Create Event</a>
             </h2>
             <h2 class="nav-item">
@@ -117,11 +114,11 @@
               {% if event.status == 'Open' %}
                 <a class="btn btn-success" href="{{ url_for('main.event_details', event_id=event.id) }}" role="button">Open</a>
               {% elif event.status == 'Inactive' %}
-                <a class="btn btn-secondary" href="{{ url_for('main.event_details', event_id=event.id) }}" role="button">Inactive</a>
+                <a class="btn btn-secondary"  role="button">Inactive</a>
               {% elif event.status == 'Sold Out' %}
-                <a class="btn btn-outline-warning" href="{{ url_for('main.event_details', event_id=event.id) }}" role="button">Sold Out</a>
+                <a class="btn btn-outline-warning" role="button">Sold Out</a>
               {% elif event.status == 'Cancelled' %}
-                <a class="btn btn-outline-danger" href="{{ url_for('main.event_details', event_id=event.id) }}" role="button">Cancelled</a>
+                <a class="btn btn-outline-danger" role="button">Cancelled</a>
               {% else %}
                 <a class="btn btn-secondary disabled" href="#" role="button">Unavailable</a>
               {% endif %}

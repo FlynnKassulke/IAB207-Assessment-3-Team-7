@@ -26,6 +26,8 @@ class Event(db.Model):
     time=db.Column(db.DateTime,nullable=False)
     contact_number = db.Column(db.Integer, index=True, nullable=False)
     street_address = db.Column(db.String(100), index=True, nullable=False)
+    total_tickets = db.Column(db.Integer, nullable=False)
+    sold_tickets = db.Column(db.Integer, nullable=False)
 
 
 class Comment(db.Model):
