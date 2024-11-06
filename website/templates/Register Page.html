@@ -48,6 +48,15 @@
     <div class="container bg-light p-4 mt-4">
       <h2 class="text-center">Create an Account</h2>
       <form action="{{url_for('main.register') }}" method="POST">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="flash {{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
         <div class="mb-3">
           <label for="name" class="form-label">Full Name:</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
